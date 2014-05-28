@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3313A81219268E3000BA6824 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3313A81119268E3000BA6824 /* Main_iPad.storyboard */; };
 		338C261619252D7E00DC805E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 338C261519252D7E00DC805E /* Foundation.framework */; };
 		338C261819252D7E00DC805E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 338C261719252D7E00DC805E /* CoreGraphics.framework */; };
 		338C261A19252D7E00DC805E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 338C261919252D7E00DC805E /* UIKit.framework */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3313A81119268E3000BA6824 /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 		338C261219252D7E00DC805E /* MeasureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeasureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		338C261519252D7E00DC805E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		338C261719252D7E00DC805E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -112,9 +114,11 @@
 		338C261B19252D7F00DC805E /* MeasureTest */ = {
 			isa = PBXGroup;
 			children = (
+				338C264A192547E400DC805E /* iPad */,
 				338C262419252D7F00DC805E /* AppDelegate.h */,
 				338C262519252D7F00DC805E /* AppDelegate.m */,
 				338C262719252D7F00DC805E /* Main.storyboard */,
+				3313A81119268E3000BA6824 /* Main_iPad.storyboard */,
 				338C262A19252D7F00DC805E /* ViewController.h */,
 				338C262B19252D7F00DC805E /* ViewController.m */,
 				338C262D19252D7F00DC805E /* Images.xcassets */,
@@ -150,6 +154,13 @@
 				338C263D19252D7F00DC805E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		338C264A192547E400DC805E /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				338C262E19252D7F00DC805E /* Images.xcassets in Resources */,
+				3313A81219268E3000BA6824 /* Main_iPad.storyboard in Resources */,
 				338C262019252D7F00DC805E /* InfoPlist.strings in Resources */,
 				338C262919252D7F00DC805E /* Main.storyboard in Resources */,
 			);
@@ -376,10 +388,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nino Masaki Tokuda (2Z2BH224NA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeasureTest/MeasureTest-Prefix.pch";
 				INFOPLIST_FILE = "MeasureTest/MeasureTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "75618C67-EF4C-43DF-B99A-8E627F8EEC5F";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -389,10 +405,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nino Masaki Tokuda (2Z2BH224NA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MeasureTest/MeasureTest-Prefix.pch";
 				INFOPLIST_FILE = "MeasureTest/MeasureTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "75618C67-EF4C-43DF-B99A-8E627F8EEC5F";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -456,6 +476,7 @@
 				338C264619252D7F00DC805E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		338C264719252D7F00DC805E /* Build configuration list for PBXNativeTarget "MeasureTestTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +485,7 @@
 				338C264919252D7F00DC805E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
