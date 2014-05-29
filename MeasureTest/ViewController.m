@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <CoreMotion/CoreMotion.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController ()
 
@@ -66,8 +67,17 @@
 @property (nonatomic) float lastPunchStrength;
 @property (nonatomic) BOOL initiated;
 
+@property (nonatomic) BOOL playsound;
+
+@property (nonatomic) int ci;
+
 @property (nonatomic, strong) NSMutableArray *measureArray;
 @property (nonatomic, strong) NSMutableArray *peakArray;
+
+@property (nonatomic, strong) AVAudioPlayer *player;
+@property (nonatomic, strong) AVAudioPlayer *bgPlayer;
+
+
 
 
 @end
@@ -105,6 +115,7 @@
 
 
   self.time = 0.0;
+  self.ci = 0;
 
 
   // new properties
@@ -124,7 +135,7 @@
 
   self.cmmanager = [[CMMotionManager alloc] init];
 
-  float acc_interval = 1.0 / 30.0;
+  float acc_interval = 1.0 / 50.0;
   self.cmmanager.accelerometerUpdateInterval = acc_interval;
   [self.cmmanager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
     if(!error){
@@ -144,6 +155,20 @@
     }
 
   }];
+
+
+  self.playsound = YES;
+  NSBundle* bundle = [NSBundle mainBundle];
+  NSString* bundleDirectory = (NSString*)[bundle bundlePath];
+  NSString *fileName = @"guile.mp3";
+  NSURL* url = [NSURL fileURLWithPath:[bundleDirectory stringByAppendingPathComponent:fileName]];
+
+  NSLog(@"url %@", url);
+
+
+  self.bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+  //self.player.numberOfLoops = 1;
+  [self.bgPlayer play];
 
 
   self.cmmanager.deviceMotionUpdateInterval = acc_interval;
@@ -174,6 +199,8 @@
 
       if(abs(acceleration.y) > 1.0) NSLog(@"*******");
       NSLog(@"%f", acceleration.y);
+      self.ci++;
+      [self.measureArray addObject:@[@(motion.timestamp),@(acceleration.x),@(acceleration.y),@(acceleration.z)]];
 
 
 
@@ -187,10 +214,31 @@
 
       if(abs(overal_distance) > thresh){
 
+        if(!self.playsound){
+          self.playsound = YES;
+          NSBundle* bundle = [NSBundle mainBundle];
+          NSString* bundleDirectory = (NSString*)[bundle bundlePath];
+          NSString *fileName = @"export.mp3";
+          NSURL* url = [NSURL fileURLWithPath:[bundleDirectory stringByAppendingPathComponent:fileName]];
+
+          NSLog(@"url %@", url);
+
+
+          self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+          //self.player.numberOfLoops = 1;
+          [self.player play];
+        }
+
         if(abs(overal_distance) > self.localHight) self.localHight = abs(overal_distance);
 
       }else{
-        if(self.localHight > 0.0) NSLog(@"punch"), self.counter++, [self.peakArray addObject:@(acceleration.y)], self.lastPunchStrength = self.localHight;
+
+        if(self.localHight > 0.0){
+
+          self.playsound = NO;
+          NSLog(@"punch"), self.counter++, [self.peakArray addObject:@(acceleration.y)], self.lastPunchStrength = self.localHight;
+
+        }
         self.counterLabel.text = [NSString stringWithFormat:@"%i", self.counter];
         self.strengthLabel.text = [NSString stringWithFormat:@"%f", self.lastPunchStrength];
         self.localHight = 0.0;
@@ -200,7 +248,7 @@
       self.back1 = self.back2;
       self.back2 = self.back3;
       self.back3 = acceleration.y;
-      //[self.measureArray addObject:@(acceleration.y)];
+
 
 
       //NSLog(@"%f  %f   %f ", acceleration.x, acceleration.y, acceleration.z);
@@ -208,8 +256,6 @@
 
       float time_diff = motion.timestamp - self.time;
       self.time = motion.timestamp;
-
-
       float filterFactor = 0.3;
 
       // ********** x pos ********** //
@@ -290,18 +336,74 @@
   self.counter = 0;
   self.counterLabel.text = @"0";
 
+
+  NSBundle* bundle = [NSBundle mainBundle];
+  NSString* bundleDirectory = (NSString*)[bundle bundlePath];
+  NSString *fileName = @"punch.mp3";
+  NSString *path = [[NSBundle mainBundle] pathForResource:@"punch" ofType:@"mp3"];
+  NSURL *url = [NSURL fileURLWithPath:path];
+
+  NSLog(@"url %@", url);
+
+  NSError *error;
+  self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+  self.player.delegate = self;
+  NSLog(@"error %@", error.userInfo);
+  //player.numberOfLoops = 1;
+  if([self.player play]) NSLog(@"succ");
+
+}
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+  NSLog(@"finish play");
+
 }
 
 
 - (IBAction)endButtonPushed:(id)sender {
 
 
+  NSBundle* bundle = [NSBundle mainBundle];
+  NSString* bundleDirectory = (NSString*)[bundle bundlePath];
+  NSString *fileNamse = @"perfect.mp3";
+  NSURL* url = [NSURL fileURLWithPath:[bundleDirectory stringByAppendingPathComponent:fileNamse]];
+
+  NSLog(@"url %@", url);
 
 
+  self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+  //self.player.numberOfLoops = 1;
+  [self.player play];
 
 
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+
+  NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:nil];
+  NSString *fileName = [NSString stringWithFormat:@"out%i.csv", files.count];
+  NSString *destination = [documentsDirectory  stringByAppendingPathComponent:fileName];
+  NSMutableString *outText = [[NSMutableString alloc] init];
+
+  NSLog(@"number of points %i %i", self.measureArray.count, self.ci);
+
+
+  for(NSArray *point in self.measureArray){
+    [outText appendFormat:@"%f,%f,%f,%f\n", [point[0] floatValue], [point[1] floatValue],[point[2] floatValue],[point[3] floatValue]];
+  }
+
+  NSError *error = nil;
+
+  BOOL succeeded = [outText writeToFile:destination atomically:YES encoding:NSUTF8StringEncoding error:&error];
+
+  if (succeeded) {
+    NSLog(@"Success at: %@",destination);
+  } else {
+    NSLog(@"Failed to store. Error: %@",error);
+  }
 
 }
+
+
 
 
 @end

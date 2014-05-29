@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B60B3AFC-62C8-4CCE-AD68-496E4892F6D2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MeasureTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D258FC75-F3B4-415F-9527-4B1AC87F197E</key>
+		<string>https://github.com/ninotokuda/punch_measurement.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MeasureTest.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D258FC75-F3B4-415F-9527-4B1AC87F197E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ninotokuda/punch_measurement.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D258FC75-F3B4-415F-9527-4B1AC87F197E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D258FC75-F3B4-415F-9527-4B1AC87F197E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MeasureTest</string>
+		</dict>
+	</array>
+</dict>
+</plist>
